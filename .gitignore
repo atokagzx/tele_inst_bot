@@ -127,4 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# VSCode
+.DS_Store
+.vscode
+
+# Project
 config.json
