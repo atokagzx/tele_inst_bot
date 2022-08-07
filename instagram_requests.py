@@ -1,4 +1,4 @@
-from instagrapi import Client
+from instagrapi import Client, types
 from time import sleep, time
 
 class InstaBot:
@@ -35,13 +35,10 @@ class InstaBot:
             print(f'http://instagram.com/p/{m.code}/', paths)
         return result
 
-    def load_stories(self, usernames):
-        self.add_users(usernames)
-        stories = []
-        for user in usernames:
-            user_id = self.users[user]
-            stories.append(self.client.user_stories(user_id))
-        return stories
+    def get_story(self, username) -> types.Story:
+        self.add_users(username)
+        user_id = self.users[username]
+        return self.client.user_stories(user_id)
         
     def add_users(self, username_list):
         if type(username_list) != list:
