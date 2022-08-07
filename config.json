@@ -1,4 +1,5 @@
 {
     "login" : "login",
-    "password" : "passwd"
+    "password" : "passwd",
+    "bot_token" : "token"
 }
