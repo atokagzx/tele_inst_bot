@@ -6,6 +6,7 @@ import time, threading, schedule
 from config import *
 from mongo_requests import *
 import requests
+import msg_handler
 
 @tg_bot.message_handler(commands=['start'])
 def handle_start(m):
@@ -72,21 +73,7 @@ def handle_message(m):
         tg_bot.send_message(cid, "Users list updated: " + str(get_users(cid)))
         set_context(cid, "start")
     elif context == "peek_stories":
-        usernames = m.text.split()
-        for user in usernames:
-            stories = parsing_bot.get_story(user)
-            for story in stories:
-                message = "User: " + user
-                # Try to send message to user. If it fails with telegram API error, print exception and continue
-                try:
-                    if story.media_type == 1:
-                        m_id = tg_bot.send_photo(cid, photo=story.thumbnail_url, caption=message)
-                    elif story.media_type == 2:
-                        m_id = tg_bot.send_video(cid, video=story.video_url, caption=message)
-                except telebot.apihelper.ApiTelegramException as e:
-                    print(e)
-                    print(story)
-                    continue
+        msg_handler.peek_stories(m)
         # set_context(cid, "start")
     else:
         tg_bot.send_message(cid, "Strange context")
